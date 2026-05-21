@@ -1,0 +1,638 @@
+{
+	"info": {
+		"_postman_id": "8b51d8b1-38fb-464a-a434-8c8e1e76550e",
+		"name": "Ticket & Asset Management System",
+		"description": "API requests for the Spring Boot Ticket and Asset Management System. Includes role-based access testing for Admins and Employees using Basic Authentication.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Authentication & Connection",
+			"item": [
+				{
+					"name": "Get Authenticated User Profile (Admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Tests connectivity and basic authentication. Retrieves the authenticated Admin user profile."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Authenticated User Profile (Employee 1)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/auth/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						},
+						"description": "Retrieves the authenticated Employee 1 profile."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Asset Management (Admin Only)",
+			"item": [
+				{
+					"name": "Get All Assets (Admin / Employee)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets"
+							]
+						},
+						"description": "Lists all assets in the system. Visible to both Admin and Employees so employees can see which assets they can report tickets on."
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Asset (Admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"iPad Pro 12.9\\\"\",\n    \"serialNumber\": \"PAD-2026-001\",\n    \"description\": \"Design Team drawing tablet\",\n    \"status\": \"AVAILABLE\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/assets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets"
+							]
+						},
+						"description": "Creates a new asset in the system. Allowed for ADMIN role only."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Asset details (Admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"MacBook Pro 16\\\" M3\",\n    \"serialNumber\": \"LAP-2026-001\",\n    \"description\": \"Upgraded developer workstation\",\n    \"status\": \"ASSIGNED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/assets/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets",
+								"1"
+							]
+						},
+						"description": "Updates an asset's details. Allowed for ADMIN role only."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Asset (Admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/assets/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets",
+								"2"
+							]
+						},
+						"description": "Deletes an asset from the system. Allowed for ADMIN role only."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Asset - REJECTION TEST (Employee)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rogue Laptop\",\n    \"serialNumber\": \"ROG-007\",\n    \"description\": \"I shouldn't be allowed to add this!\",\n    \"status\": \"AVAILABLE\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/assets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"assets"
+							]
+						},
+						"description": "This request tries to add an asset using Employee credentials. It should be rejected by Spring Security with a 403 Forbidden status!"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Ticket Management (Employees & Admins)",
+			"item": [
+				{
+					"name": "Get All Tickets (Admin View)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets"
+							]
+						},
+						"description": "Retrieves ALL tickets across the entire organization. Only Admins can see all tickets."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tickets (Employee View)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets"
+							]
+						},
+						"description": "Retrieves ONLY the tickets created by the logged-in Employee."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Ticket linked to Asset (Employee 1)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Overheating laptop\",\n    \"description\": \"My MacBook Pro gets extremely hot near the touch bar and the fan starts spinning loudly even with low usage.\",\n    \"priority\": \"MEDIUM\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets?assetId=1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets"
+							],
+							"query": [
+								{
+									"key": "assetId",
+									"value": "1",
+									"description": "Associates this ticket with MacBook Pro (ID: 1)"
+								}
+							]
+						},
+						"description": "Creates a new ticket. The creator is automatically set to Employee 1. The ticket is associated with Asset ID 1."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ticket By ID - Own Ticket (Employee 1)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"1"
+							]
+						},
+						"description": "Employee 1 fetches their own ticket. This should succeed."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Ticket By ID - REJECTION TEST (Employee 2 accessing Employee 1's Ticket)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee2",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"1"
+							]
+						},
+						"description": "Employee 2 attempts to fetch a ticket owned by Employee 1. This should be rejected by the backend Service layer with 403 Forbidden!"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Ticket details (Employee 1 - Owner)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee1",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Screen flickering (Severe)\",\n    \"description\": \"Now the screen keeps flickering and goes black for 2-3 seconds at a time.\",\n    \"priority\": \"HIGH\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"1"
+							]
+						},
+						"description": "Allows the ticket owner (Employee 1) to update the ticket title, description, or priority."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Ticket Status / Resolve (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Screen flickering issue\",\n    \"description\": \"My MacBook Pro screen has started flickering intermittently, especially when connected to the external charger.\",\n    \"priority\": \"HIGH\",\n    \"status\": \"RESOLVED\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"1"
+							]
+						},
+						"description": "Allows an Admin to update any ticket's status (e.g. transitioning from OPEN to IN_PROGRESS, RESOLVED, or CLOSED)."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Open Ticket (Employee 2)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "employee2",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "emp123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/tickets/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"2"
+							]
+						},
+						"description": "Deletes an open ticket created by Employee 2. This is allowed for employees only if the ticket is still in OPEN status."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
