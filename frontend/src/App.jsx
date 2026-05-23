@@ -4,8 +4,8 @@ import Dashboard from './components/Dashboard';
 import Assets from './components/Assets';
 import Tickets from './components/Tickets';
 
-// Using basic auth for the seeded admin user
-const API_URL = 'http://localhost:8080/api';
+// Using environment variable for API URL (defaults to localhost for development)
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 const AUTH_HEADER = 'Basic ' + btoa('admin:admin123');
 
 function App() {
