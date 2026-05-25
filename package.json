@@ -1,9 +1,0 @@
-{
-  "name": "ticket-asset-management-root",
-  "private": true,
-  "scripts": {},
-  "dependencies": {
-    "express": "^5.2.1",
-    "node": "^24.16.0"
-  }
-}
